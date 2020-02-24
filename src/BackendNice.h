@@ -21,14 +21,17 @@ class BackendNice : public BackendBase
     Window *window_help;
     MenuWindow* window_menu;
     ActualWindow actual_window = Frontend;
+    int quit = 0;
 public:
     BackendNice();
+    ~BackendNice();
     void bind(const std::string &command, std::function<void ()> callback, const std::string &helpMessage) noexcept override;
     void operator()() override;
     void run();
 
 
     void render();
+
 
 };
 

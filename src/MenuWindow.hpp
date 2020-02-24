@@ -19,16 +19,20 @@ public:
     bool menu_open = false;
 
     MenuWindow(): Window(){};
+    ~MenuWindow(){
+        del_panel(panel);
+        delwin(window);
+    }
 
     void toggle_menu(){
         menu_open = !menu_open;
     }
 
     void render(){
-        int width = (int) menu.get_menu_fields().size() * 10;
+        int width = (int) menu.get_menu_fields().size() * 15;
         if (menu_open){
             show_menu();
-            resize(width, 10);
+            resize(width, 15);
         }
         else{
             hide_menu();
@@ -42,7 +46,7 @@ public:
         top_window();
         menu_open = true;
         const VectorString &fields = menu.get_menu_fields();
-        for(int i = 0,j = 0; i < fields.size(); i++, j+=10){
+        for(int i = 0,j = 0; i < fields.size(); i++, j+=12){
             print(fields[i], 0, j);
             if(i == menu.getSelectedMenu()){
                 const VectorString &items = menu.get_menu_items(i);
@@ -61,7 +65,7 @@ public:
         menu_open = false;
         const VectorString &fields = menu.get_menu_fields();
         for(int i = 0,j = 0; i < fields.size(); i++){
-            print(fields[i], 0, i*10);
+            print(fields[i], 0, i*12);
         }
     }
 
@@ -92,7 +96,7 @@ public:
                 is_menu_choose = false;
             }
         }
-        moveCursor(is_menu_choose ? menu.getSelectedItem() + 1 : 0, menu.getSelectedMenu()*10);
+        moveCursor(is_menu_choose ? menu.getSelectedItem() + 1 : 0, menu.getSelectedMenu()*12);
     }
 
     void add_option(std::string command, const std::function<void()>& func){

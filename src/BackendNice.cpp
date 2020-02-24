@@ -119,8 +119,10 @@ void backends::BackendNice::run() {
             actual_window = Frontend;
             render();
         }
-        else
-            exit(0);
+        else{
+            this->quit = 1;
+        }
+
     });
 
     while (true)
@@ -150,6 +152,9 @@ void backends::BackendNice::run() {
             commands.run("<EDITION>");
         }
 
+        if(this->quit){
+            break;
+        }
 
 
     }
@@ -171,4 +176,9 @@ void backends::BackendNice::render() {
 
         window_help->top_window();
     }
+}
+
+backends::BackendNice::~BackendNice() {
+    delete this->window_menu;
+    delete this->window_help;
 }
